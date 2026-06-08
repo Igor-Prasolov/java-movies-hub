@@ -33,7 +33,7 @@ public class MoviesApiTest {
     @BeforeAll
     static void beforeAll() {
         store = new MoviesStore();
-        server = new MoviesServer(store);
+        server = new MoviesServer(store, 8080);
         server.start();
         client = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(2))

@@ -26,12 +26,12 @@ class MoviesHandler extends BaseHttpHandler {
 
     @Override
     public void handle(HttpExchange ex) throws IOException {
-        List<Movie> movies = store.getAll();
         int currentYear = LocalDate.now().getYear();
         String method = ex.getRequestMethod();
         if (method.equalsIgnoreCase("GET")) {
             String path = ex.getRequestURI().getPath();
             if (path.equals("/movies")) {
+                List<Movie> movies = store.getAll();
                 String query = ex.getRequestURI().getQuery();
                 if (query == null) {
                     String json = gson.toJson(movies);
@@ -40,9 +40,7 @@ class MoviesHandler extends BaseHttpHandler {
                     String yearStr = query.substring(5);
                     try {
                         int year = Integer.parseInt(yearStr);
-                        List<Movie> filtered = movies.stream()
-                                .filter(m -> m.getYear() == year)
-                                .collect(Collectors.toList());
+                        List<Movie> filtered = store.getByYear(year);
                         String json = gson.toJson(filtered);
                         sendJson(ex, 200, json);
                     } catch (NumberFormatException e) {

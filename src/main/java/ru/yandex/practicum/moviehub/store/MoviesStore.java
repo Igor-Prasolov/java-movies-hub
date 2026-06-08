@@ -3,6 +3,7 @@ package ru.yandex.practicum.moviehub.store;
 import ru.yandex.practicum.moviehub.model.Movie;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MoviesStore {
     private Map<Integer, Movie> movieMap = new HashMap<>();
@@ -18,6 +19,12 @@ public class MoviesStore {
         movieMap.put(nextId, movie);
         nextId++;
         return movie;
+    }
+
+    public List<Movie> getByYear(int year) {
+        return movieMap.values().stream()
+                .filter(m -> m.getYear() == year)
+                .collect(Collectors.toList());
     }
 
     public void clearAll() {
