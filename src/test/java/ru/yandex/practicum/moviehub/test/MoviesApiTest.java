@@ -252,10 +252,10 @@ public class MoviesApiTest {
         JsonObject jsonObject = jsonElement.getAsJsonObject();
         assertEquals(201, response.statusCode());
 
-        int Id = jsonObject.get("id").getAsInt();
+        int id = jsonObject.get("id").getAsInt();
 
         HttpRequest getRequest = HttpRequest.newBuilder()
-                .uri(URI.create(BASE + "/movies/" + Id))
+                .uri(URI.create(BASE + "/movies/" + id))
                 .GET()
                 .build();
 
